@@ -32,7 +32,8 @@ const Calendar = ({monthDisplay, intent, month}: ICalendarProps) => {
             let weekend: boolean = false
             let outsideMonth: boolean = false
             if(curDate.getDate() === datePointer.getDate() 
-            && curDate.getMonth() === monthDisplay.monthIdx) {
+            && curDate.getMonth() === monthDisplay.monthIdx
+            && curDate.getFullYear() === curViewDate.year) {
                 today = true
             }
             if (datePointer.getDay() === 0 || datePointer.getDay() === 6) {
@@ -58,10 +59,10 @@ const Calendar = ({monthDisplay, intent, month}: ICalendarProps) => {
         </p>
         <div className='calendar--days__container'>
             {cla.current.days[intent].map(e => 
-            <p className={`day-list ${(intent === "full" ? "align-end" : "center-text")}`}>{e}</p>)}
+            <p key={e} className={`day-list ${(intent === "full" ? "align-end" : "center-text")}`}>{e}</p>)}
         </div>
         <div className={cla.current.inner[intent]}>
-            {monthArray.map((el: any) => {
+            {monthArray.map((el: any, idx: number) => {
                 let classNamesOuter = "w-dates"
                 let classNamesInner = "pad-text"
                 if(intent === "full") classNamesOuter += " border"
@@ -80,8 +81,8 @@ const Calendar = ({monthDisplay, intent, month}: ICalendarProps) => {
                     classNamesInner += " text-light"
                 }
                 return (
-                <div className={classNamesOuter}>
-                    <p className={classNamesInner}>{el.date}</p>
+                <div key={idx} className={classNamesOuter}>
+                    <p key={idx} className={classNamesInner}>{el.date}</p>
                 </div>)
             })}
         </div>
